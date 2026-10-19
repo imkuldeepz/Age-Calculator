@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgeWise AI — Smart Age Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/75 dark:bg-slate-900/75 border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-sparkles text-lg"></i>
+                </div>
+                <span class="text-xl font-bold bg-gradient-to-r from-brand-600 via-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+                    AgeWise AI
+                </span>
+            </div>
+            
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+                <a href="#calculator" class="hover:text-brand-600 dark:hover:text-indigo-400 transition-colors">Calculator</a>
+                <a href="#ai-insights" class="hover:text-brand-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                    <span>AI Insights</span>
+                    <span class="bg-brand-500/10 text-brand-600 dark:text-indigo-400 text-xs px-2 py-0.5 rounded-full font-semibold">Gemini</span>
+                </a>
+                <a href="#tools" class="hover:text-brand-600 dark:hover:text-indigo-400 transition-colors">Tools</a>
+                <a href="#about" class="hover:text-brand-600 dark:hover:text-indigo-400 transition-colors">About</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <button id="themeToggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all focus:outline-none focus:ring-2 focus:ring-brand-500" aria-label="Toggle theme">
+                    <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+        
+        <!-- Hero Section -->
+        <section class="text-center space-y-4 max-w-3xl mx-auto pt-4">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 dark:bg-indigo-950/60 border border-brand-100 dark:border-indigo-800/50 text-brand-600 dark:text-indigo-300 text-xs font-semibold uppercase tracking-wider">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> AI-Enhanced Chronological Intelligence
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+                Discover Your Age, <span class="bg-gradient-to-r from-brand-600 via-indigo-500 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">Beyond the Numbers.</span>
+            </h1>
+            <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                Precision chronological calculation paired with personalized AI insights into your life metrics, historical context, and future milestones.
+            </p>
+        </section>
+
+        <!-- Main Calculator Card -->
+        <section id="calculator" class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border transition-all">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Input Panel -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <i class="fa-regular fa-calendar-check text-brand-600 dark:text-indigo-400"></i> Date of Birth
+                        </h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Select your birth date to unlock instant detailed calculations.</p>
+                    </div>
+
+                    <form id="ageForm" onsubmit="event.preventDefault();" class="space-y-4">
+                        <!-- Date Picker Input -->
+                        <div>
+                            <label for="dob" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Select Date</label>
+                            <input type="date" id="dob" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all shadow-sm font-medium">
+                        </div>
+
+                        <!-- Dropdown Selectors for Precision -->
+                        <div class="grid grid-cols-3 gap-2 pt-1">
+                            <div>
+                                <label for="dobDay" class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Day</label>
+                                <select id="dobDay" class="w-full px-2.5 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                    <!-- Populated via JS -->
+                                </select>
+                            </div>
+                            <div>
+                                <label for="dobMonth" class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Month</label>
+                                <select id="dobMonth" class="w-full px-2.5 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                    <!-- Populated via JS -->
+                                </select>
+                            </div>
+                            <div>
+                                <label for="dobYear" class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Year</label>
+                                <select id="dobYear" class="w-full px-2.5 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                    <!-- Populated via JS -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Validation Message -->
+                        <div id="validationError" class="hidden text-xs text-rose-500 bg-rose-50 dark:bg-rose-950/40 p-3 rounded-lg border border-rose-200 dark:border-rose-900/50 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-exclamation"></i> <span id="validationText">Please select a valid past date.</span>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex items-center gap-3 pt-2">
+                            <button type="button" id="btnCalculate" class="flex-1 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md shadow-brand-500/20 hover:shadow-lg hover:shadow-brand-500/30 transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-calculator"></i> Calculate
+                            </button>
+                            <button type="button" id="btnReset" class="p-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-xl transition-all" title="Reset Calculator">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Quick Details Info Card -->
+                    <div class="bg-slate-100/70 dark:bg-slate-900/50 rounded-2xl p-4 border border-slate-200/60 dark:border-slate-800 space-y-3 text-sm">
+                        <div class="flex justify-between items-center text-slate-600 dark:text-slate-400">
+                            <span class="flex items-center gap-2"><i class="fa-regular fa-calendar text-indigo-500"></i> Day of Birth:</span>
+                            <span id="birthWeekday" class="font-semibold text-slate-900 dark:text-white">---</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-600 dark:text-slate-400">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-star text-amber-500"></i> Zodiac Sign:</span>
+                            <span id="zodiacSign" class="font-semibold text-slate-900 dark:text-white">---</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-600 dark:text-slate-400">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-cake-candles text-purple-500"></i> Next Birthday:</span>
+                            <span id="nextBirthdayDays" class="font-semibold text-brand-600 dark:text-indigo-400">---</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Output Panel -->
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- Primary Exact Age Display -->
+                    <div class="bg-gradient-to-br from-indigo-500 via-brand-600 to-purple-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                        
+                        <div class="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-100">Exact Chronological Age</span>
+                            <span id="liveClockBadge" class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-full text-xs text-white">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Live Ticking
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-2 text-center py-2">
+                            <div class="space-y-1">
+                                <span id="yearsVal" class="text-4xl sm:text-5xl font-extrabold tracking-tight">0</span>
+                                <p class="text-xs font-medium text-indigo-100 uppercase tracking-wider">Years</p>
+                            </div>
+                            <div class="space-y-1 border-x border-white/10">
+                                <span id="monthsVal" class="text-4xl sm:text-5xl font-extrabold tracking-tight">0</span>
+                                <p class="text-xs font-medium text-indigo-100 uppercase tracking-wider">Months</p>
+                            </div>
+                            <div class="space-y-1">
+                                <span id="daysVal" class="text-4xl sm:text-5xl font-extrabold tracking-tight">0</span>
+                                <p class="text-xs font-medium text-indigo-100 uppercase tracking-wider">Days</p>
+                            </div>
+                        </div>
+
+                        <!-- Real-time dynamic seconds ticker -->
+                        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-around text-xs font-mono text-indigo-100">
+                            <div><span id="hoursVal" class="font-bold text-white text-sm">0</span> hrs</div>
+                            <div><span id="minutesVal" class="font-bold text-white text-sm">0</span> mins</div>
+                            <div><span id="secondsVal" class="font-bold text-amber-300 text-sm">0</span> secs</div>
+                        </div>
+                    </div>
+
+                    <!-- Breakdown Grid -->
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 uppercase tracking-wider">Total Time Units Lived</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            <div class="stat-card p-3.5 bg-slate-100/80 dark:bg-slate-900/80 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Total Months</p>
+                                <p id="totalMonths" class="text-lg font-bold text-slate-900 dark:text-white mt-1">0</p>
+                            </div>
+                            <div class="stat-card p-3.5 bg-slate-100/80 dark:bg-slate-900/80 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Total Weeks</p>
+                                <p id="totalWeeks" class="text-lg font-bold text-slate-900 dark:text-white mt-1">0</p>
+                            </div>
+                            <div class="stat-card p-3.5 bg-slate-100/80 dark:bg-slate-900/80 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Total Days</p>
+                                <p id="totalDays" class="text-lg font-bold text-slate-900 dark:text-white mt-1">0</p>
+                            </div>
+                            <div class="stat-card p-3.5 bg-slate-100/80 dark:bg-slate-900/80 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Total Hours</p>
+                                <p id="totalHours" class="text-lg font-bold text-slate-900 dark:text-white mt-1">0</p>
+                            </div>
+                            <div class="stat-card p-3.5 bg-slate-100/80 dark:bg-slate-900/80 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Total Minutes</p>
+                                <p id="totalMinutes" class="text-lg font-bold text-slate-900 dark:text-white mt-1">0</p>
+                            </div>
+                            <div class="stat-card p-3.5 bg-slate-100/80 dark:bg-slate-900/80 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Heartbeats (~70bpm)</p>
+                                <p id="totalHeartbeats" class="text-lg font-bold text-rose-500 dark:text-rose-400 mt-1">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Bar for Share/Copy/Print -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-2 no-print border-t border-slate-200 dark:border-slate-800">
+                        <div class="flex items-center gap-2">
+                            <button id="btnCopy" class="px-3.5 py-2 text-xs font-semibold bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg transition-all flex items-center gap-1.5">
+                                <i class="fa-regular fa-copy"></i> Copy Results
+                            </button>
+                            <button id="btnShare" class="px-3.5 py-2 text-xs font-semibold bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-share-nodes"></i> Share
+                            </button>
+                        </div>
+                        <button id="btnPrint" class="px-3.5 py-2 text-xs font-semibold border border-brand-500 text-brand-600 dark:text-indigo-400 hover:bg-brand-50 dark:hover:bg-slate-800 rounded-lg transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-pdf"></i> Download/Print Report
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- AI Insights Section -->
+        <section id="ai-insights" class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl border relative overflow-hidden">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div>
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-indigo-400 mb-1">
+                        <i class="fa-solid fa-brain"></i> Powered by Gemini AI
+                    </span>
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Smart Life & Age Insights</h2>
+                </div>
+                <button id="btnGenerateAI" class="px-5 py-2.5 bg-gradient-to-r from-purple-600 to-brand-600 hover:from-purple-700 hover:to-brand-700 text-white font-semibold text-sm rounded-xl shadow-md transition-all flex items-center gap-2 self-start md:self-auto">
+                    <i class="fa-solid fa-sparkles"></i> Generate AI Analysis
+                </button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="aiLoading" class="hidden py-12 text-center space-y-3">
+                <div class="inline-block w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
+                <p class="text-sm font-medium text-slate-600 dark:text-slate-400 animate-pulse">Consulting Gemini AI for personalized life insights...</p>
+            </div>
+
+            <!-- AI Output Grid -->
+            <div id="aiContent" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Personalized Summary -->
+                <div class="bg-slate-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 space-y-2">
+                    <h3 class="text-sm font-bold text-brand-600 dark:text-indigo-400 flex items-center gap-2">
+                        <i class="fa-solid fa-user-astronaut"></i> Personalized Life Overview
+                    </h3>
+                    <p id="aiSummary" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Select your birth date and click "Generate AI Analysis" to view a tailored breakdown of your life trajectory and notable era facts.
+                    </p>
+                </div>
+
+                <!-- Growth Goals -->
+                <div class="bg-slate-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 space-y-2">
+                    <h3 class="text-sm font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+                        <i class="fa-solid fa-bullseye"></i> Age-Appropriate Development Goals
+                    </h3>
+                    <ul id="aiGoals" class="text-sm text-slate-600 dark:text-slate-300 space-y-1.5 list-disc list-inside">
+                        <li>Calculate your age to receive custom personal growth milestones.</li>
+                    </ul>
+                </div>
+
+                <!-- Era & Historical Context -->
+                <div class="bg-slate-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 space-y-2">
+                    <h3 class="text-sm font-bold text-amber-600 dark:text-amber-400 flex items-center gap-2">
+                        <i class="fa-solid fa-hourglass-half"></i> Historical & Era Context
+                    </h3>
+                    <p id="aiEraFacts" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Discover what world tech, culture, and events marked your birth year and age milestone.
+                    </p>
+                </div>
+
+                <!-- Custom Birthday Wish -->
+                <div class="bg-slate-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 space-y-2">
+                    <h3 class="text-sm font-bold text-purple-600 dark:text-purple-400 flex items-center gap-2">
+                        <i class="fa-solid fa-gift"></i> Next Birthday Message Prompt
+                    </h3>
+                    <p id="aiBirthdayWish" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed italic">
+                        "Your future message will appear here..."
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-4 text-xs text-slate-400 text-right">
+                <span id="aiBadge" class="inline-flex items-center gap-1"><i class="fa-solid fa-shield-halved"></i> Powered by Google Gemini AI with client-side fallback engine</span>
+            </div>
+        </section>
+
+        <!-- Additional Tools Grid -->
+        <section id="tools" class="space-y-6">
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-toolbox text-brand-600 dark:text-indigo-400"></i> Chrono Toolkit
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Tool 1: Date Difference Calculator -->
+                <div class="glass-card rounded-2xl p-6 border space-y-4">
+                    <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
+                        <div class="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
+                            <i class="fa-solid fa-arrow-right-arrow-left text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white">Date Difference Calculator</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Find exact duration between any two dates</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Start Date</label>
+                            <input type="date" id="diffStart" class="w-full p-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">End Date</label>
+                            <input type="date" id="diffEnd" class="w-full p-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
+                        </div>
+                    </div>
+
+                    <button id="btnCalcDiff" class="w-full py-2.5 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 text-white font-medium text-xs rounded-xl transition-all">
+                        Calculate Interval
+                    </button>
+
+                    <div id="diffOutput" class="hidden p-3 bg-indigo-50 dark:bg-slate-900/80 rounded-xl border border-indigo-100 dark:border-slate-800 text-sm text-indigo-950 dark:text-indigo-200 font-medium text-center">
+                        ---
+                    </div>
+                </div>
+
+                <!-- Tool 2: Future / Target Date Age -->
+                <div class="glass-card rounded-2xl p-6 border space-y-4">
+                    <div class="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
+                        <div class="p-2 rounded-lg bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400">
+                            <i class="fa-solid fa-clock-rotate-left text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white">Age at Target Date</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Calculate how old you will be (or were) on a specific date</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Target Date</label>
+                            <input type="date" id="targetDateInput" class="w-full p-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
+                        </div>
+                        <div class="flex items-end">
+                            <button id="btnCalcTarget" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-medium text-xs rounded-xl transition-all">
+                                Check Target Age
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="targetOutput" class="hidden p-3 bg-purple-50 dark:bg-slate-900/80 rounded-xl border border-purple-100 dark:border-slate-800 text-sm text-purple-950 dark:text-purple-200 font-medium text-center">
+                        ---
+                    </div>
+                </div>
+            </div>
+
+            <!-- Life Matrix (Weeks in Pixels) Visualization -->
+            <div class="glass-card rounded-2xl p-6 border space-y-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <i class="fa-solid fa-grid-2 text-brand-600 dark:text-indigo-400"></i> The Life Matrix (80-Year Life Grid)
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Each dot represents 1 year of life (total 80 years). Filled dots are years lived.</p>
+                    </div>
+                    <span id="matrixStats" class="text-xs font-mono bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md text-slate-600 dark:text-slate-300">0 / 80 Years</span>
+                </div>
+
+                <div id="lifeGrid" class="grid grid-cols-10 sm:grid-cols-20 gap-1.5 pt-2">
+                    <!-- Dots inserted via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="glass-card rounded-2xl p-6 border space-y-3">
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white">About AgeWise AI</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                AgeWise AI combines precise astronomical chronological mathematics with Google Gemini AI to provide context, reflection, and future planning tools for personal development. All core calculations run strictly on client-side algorithms, guaranteeing speed, zero latency, and absolute user privacy.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 py-6 mt-12 text-center text-xs text-slate-500 dark:text-slate-400">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>© <span id="currentYear"></span> AgeWise AI. Built with precision & Gemini AI.</p>
+            <div class="flex gap-4">
+                <a href="#calculator" class="hover:underline">Calculator</a>
+                <a href="#ai-insights" class="hover:underline">AI Insights</a>
+                <a href="#tools" class="hover:underline">Chrono Tools</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Message Box -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-sm font-medium">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600"></i>
+        <span id="toastMsg">Action completed successfully.</span>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
